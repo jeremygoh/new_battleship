@@ -1,5 +1,5 @@
 class Board
-attr_accessor :occupied
+attr_accessor :occupied, :misses, :hits
 
 ###letters are columns
 ##Numbers are rows
@@ -8,6 +8,8 @@ attr_accessor :occupied
 		@grid = Array.new(10) {Array.new(10)}	##need to change this
 		@ships = []
 		@occupied = []
+		@misses=[]
+		@hits = []
 	end
 
 	def occupied
@@ -21,10 +23,52 @@ attr_accessor :occupied
 	def grid
 		@grid
 	end
+
+	def shoot(coordinate)
+		if @misses.include?(coordinate) || @hits.include?(coordinate)
+			"No change. You already targeted that square!"
+		elsif @occupied.include?(coordinate)
+			@hits << coordinate
+			ship = ship_in_coordinate(coordinate)
+			ship.hit!
+			change_coordinate_to_hit([coordinate])
+			if !ship.sunk?
+				"HIT"
+			else
+				"Sunk a ship!"
+			end
+		else
+			@misses << coordinate
+			"MISS!"
+		end
+	end
+
+
+	def change_coordinate_to_hit(coordinates)	###change it so 0 indicates occupied, nil is empty, 1 is hit
+		coordinates_in_numbers = convert_to_numbers(coordinates)	##returns [11,12,13]
+		coordinates_in_numbers.each {|coordinate|
+			@grid[convert_row_number_to_index(coordinate)][coordinate[0].to_i-1] = 1
+		}
+	end
+
+
+	def ship_in_coordinate(coordinate)
+		what_ship = "no ship"
+		@ships.each{|ship|
+			if ship.location.include?(coordinate)
+				what_ship = ship
+				break
+			end
+		}
+		what_ship
+	end
+
+
 	
 	def place(ship, coordinates)
 		if coordinates_ok?(ship, coordinates)
 			ship.set_location!(coordinates)
+			@ships << ship
 			coordinates.each{|coordinate|
 				@occupied << coordinate
 			}
@@ -41,9 +85,11 @@ attr_accessor :occupied
 	def apply_coordinates_to_grid(coordinates)	###change it so 0 indicates occupied, nil is empty, 1 is hit
 		coordinates_in_numbers = convert_to_numbers(coordinates)	##returns [11,12,13]
 		coordinates_in_numbers.each {|coordinate|
-			@grid[0][coordinate[0].to_i-1] = 0
+			@grid[convert_row_number_to_index(coordinate)][coordinate[0].to_i-1] = 0
 		}
 	end
+
+##for a single coordinate
 
 	def convert_to_numbers(coordinates)
 		coordinates_in_numbers = []
