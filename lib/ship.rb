@@ -8,6 +8,11 @@ attr_accessor :length
 		@sunk = false
 		@hits = 0
 		@location_set = false
+		@location = []
+	end
+
+	def location
+		@location
 	end
 
 	def sunk?
@@ -24,6 +29,11 @@ attr_accessor :length
 
 	def location_set?
 		@location_set
+	end
+
+	def set_location!(coordinates)
+		@location.replace(coordinates)
+		@location_set=true
 	end
 
 	def hit!

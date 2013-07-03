@@ -29,6 +29,14 @@ it "should have its location set by default" do
 	ship.location_set?.should be_false
 end
 
+it "should have a location which is empty by default" do
+	ship.location.should be_empty
+end
+
+it "should have return true for set_location once a location has been set" do
+	ship.set_location!(["A1", "A2"])
+	ship.location_set?.should be_true
+end
 
 
 end

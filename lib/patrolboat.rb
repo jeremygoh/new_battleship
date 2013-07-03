@@ -1,4 +1,3 @@
-require 'ship'
 
 class PatrolBoat < Ship
 
