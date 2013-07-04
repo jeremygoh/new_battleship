@@ -18,18 +18,18 @@ end
 
 
 def set_up
-
 	p1_ships = [AircraftCarrier.new, Battleship.new, Submarine.new, Destroyer.new, PatrolBoat.new]
 	p2_ships = [AircraftCarrier.new, Battleship.new, Submarine.new, Destroyer.new, PatrolBoat.new]
 	p1_board = Board.new
 	p2_board = Board.new
-	p1_target = Target.new(p2_board)
-	p2_target = Target.new(p1_board)
+	p1_target = p2_board
+	p2_target = p1_board
 	p1 = Player.new(p1_board, p1_target, p1_ships)
 	p2 = Player.new(p2_board, p2_target, p2_ships)
 	p1.place_ships
 	p2.place_ships
 end
+
 
 def who_goes_first
 	if rand(1) == 1

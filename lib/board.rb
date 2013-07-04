@@ -24,6 +24,37 @@ attr_accessor :occupied, :misses, :hits
 		@grid
 	end
 
+	#######
+	def show_target	
+		@target = @grid.map {|line| line.dup}
+		replace_occupied(apply_misses)
+	end
+
+	def apply_misses
+		coordinates_in_numbers = convert_to_numbers(self.misses)
+		coordinates_in_numbers.each {|coordinate|
+			@target[convert_row_number_to_index(coordinate)][coordinate[0].to_i-1] = 2
+		}
+		@target	
+	end
+
+	
+
+	def replace_occupied(board_with_misses)
+		board_without_occupied = board_with_misses.map{|row|
+			row.map{|cell| 
+			cell==1 ? nil: cell
+			}
+		}
+	end
+
+
+
+
+
+
+
+#########
 	def shoot(coordinate)
 		if @misses.include?(coordinate) || @hits.include?(coordinate)
 			"No change. You already targeted that square!"
