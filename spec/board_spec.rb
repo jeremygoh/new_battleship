@@ -21,6 +21,13 @@ let(:board){Board.new}
 		board.misses.should be_empty
 	end
 
+context "for showing misses" do
+	xit "should show the board with misses but not change the grid" do
+
+	end
+
+end
+
 
 context "receiving a shot" do
 

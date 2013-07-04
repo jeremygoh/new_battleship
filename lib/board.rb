@@ -20,7 +20,7 @@ attr_accessor :occupied, :misses, :hits
 		@ships
 	end
 
-	def grid
+	def grid #this will show empty cells with nil, occupied as 0, hit occupied as 1. 
 		@grid
 	end
 
