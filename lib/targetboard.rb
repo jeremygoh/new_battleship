@@ -2,6 +2,8 @@ class TargetBoard
 
 	attr_accessor :grid
 
+	def initialize(board)
+		@target = board.dup
 	#this method will show the grid of the board with misses and without the 1s
 
 	def show(board)	
