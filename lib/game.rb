@@ -12,8 +12,8 @@ end
 
 
 def winner
-	return "Player 1" if @p1.score == 5
-	return "Player 2" if @p2.score == 5
+	return "Player 1" if @p2.ships.all?{|ship| ship.sunk?}
+	return "Player 2" if @p1.ships.all?{|ship| ship.sunk?}
 end
 
 

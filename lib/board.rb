@@ -56,7 +56,9 @@ attr_accessor :occupied, :misses, :hits
 
 #########
 	def shoot(coordinate)
-		if @misses.include?(coordinate) || @hits.include?(coordinate)
+		if !shoot_coordinate_ok?(coordinate)
+			puts "That shot was so bad, you missed the board! Invalid coordinate."
+		elsif @misses.include?(coordinate) || @hits.include?(coordinate)
 			puts "No change. You already targeted that square!"
 		elsif @occupied.include?(coordinate)
 			@hits << coordinate
@@ -229,6 +231,10 @@ attr_accessor :occupied, :misses, :hits
 
 	def coordinates_ok?(ship, coordinates)
 		size?(ship, coordinates) && in_range?(coordinates) && !occupied?(coordinates) && valid?(coordinates)
+	end
+
+	def shoot_coordinate_ok?(coordinate)
+		in_range?([coordinate])
 	end
 
 	######end of coordinate checks########
