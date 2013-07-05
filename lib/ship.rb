@@ -11,6 +11,7 @@ attr_accessor :length
 		@location = []
 	end
 
+
 	def location
 		@location
 	end

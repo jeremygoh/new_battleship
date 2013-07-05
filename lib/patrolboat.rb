@@ -1,4 +1,3 @@
-
 class PatrolBoat < Ship
 
 

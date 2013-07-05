@@ -5,6 +5,7 @@ class TargetBoard
 	def initialize(board)
 		@target = board.dup
 	#this method will show the grid of the board with misses and without the 1s
+end
 
 	def show(board)	
 		replace_occupied(apply_misses(board))

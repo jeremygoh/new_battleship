@@ -1,5 +1,3 @@
-require 'ship'
-
 class Destroyer < Ship
 
 

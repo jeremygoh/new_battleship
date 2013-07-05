@@ -43,7 +43,7 @@ attr_accessor :occupied, :misses, :hits
 	def replace_occupied(board_with_misses)
 		board_without_occupied = board_with_misses.map{|row|
 			row.map{|cell| 
-			cell==1 ? nil: cell
+			cell==0 ? nil: cell
 			}
 		}
 	end
@@ -57,20 +57,21 @@ attr_accessor :occupied, :misses, :hits
 #########
 	def shoot(coordinate)
 		if @misses.include?(coordinate) || @hits.include?(coordinate)
-			"No change. You already targeted that square!"
+			puts "No change. You already targeted that square!"
 		elsif @occupied.include?(coordinate)
 			@hits << coordinate
 			ship = ship_in_coordinate(coordinate)
 			ship.hit!
 			change_coordinate_to_hit([coordinate])
 			if !ship.sunk?
-				"HIT"
+				puts "HIT"
 			else
-				"Sunk a ship!"
+				puts "Sunk a ship!"
 			end
 		else
 			@misses << coordinate
-			"MISS!"
+			puts "MISS!"
+			puts ""
 		end
 	end
 
@@ -94,20 +95,21 @@ attr_accessor :occupied, :misses, :hits
 		what_ship
 	end
 
-
 	
 	def place(ship, coordinates)
-		if coordinates_ok?(ship, coordinates)
-			ship.set_location!(coordinates)
-			@ships << ship
-			coordinates.each{|coordinate|
-				@occupied << coordinate
-			}
-			apply_coordinates_to_grid(coordinates)
-		else
-			"Problem setting coordinates. There are either insufficient coordinates, they are invalid or are already occupied!"
-		end
+			if coordinates_ok?(ship, coordinates)
+				ship.set_location!(coordinates)
+				@ships << ship
+				coordinates.each{|coordinate|
+					@occupied << coordinate
+				}
+				apply_coordinates_to_grid(coordinates)
+			else
+				puts "Problem setting coordinates. There are either insufficient coordinates, they are invalid or are already occupied!"
+			end
 	end
+
+
 
 	def convert_row_number_to_index(coordinate)
 		(coordinate[1,2].to_i - 1)
